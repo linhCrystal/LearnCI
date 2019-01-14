@@ -1,0 +1,67 @@
+# iOS CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/ios-migrating-from-1-2/ for more details
+#
+version: 2
+jobs:
+  github:
+    machine:
+      xcode: "8.3.3"
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "4f:e5:c7:2a:53:99:61:ed:2b:8a:de:4f:7b:af:d1:5c"
+      - run: 
+          name: Github Clone ZopSmart code to bitbucket
+          command: git clone https://github.com/ZopNow/thor-ios.git
+    
+  build:
+
+    # Specify the Xcode version to use
+    machine:
+      xcode: "8.3.3"
+
+    steps:
+      - checkout
+        
+      # Install CocoaPods
+      - run:
+          name: Install CocoaPods
+          command: pod install
+
+      # Build the app and run tests
+      - run:
+          name: Build and run tests
+          command: fastlane scan
+          environment:
+            SCAN_DEVICE: iPhone 6
+            SCAN_SCHEME: WebTests
+
+      # Collect XML test results data to show in the UI,
+      # and save the same XML files under test-results folder
+      # in the Artifacts tab
+      - store_test_results:
+          path: test_output/report.xml
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: scan-test-results
+      - store_artifacts:
+          path: ~/Library/Logs/scan
+          destination: scan-logs
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build
+  everyfivemin:
+    triggers:
+      - schedule:
+          cron: "5 18 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - github
+
