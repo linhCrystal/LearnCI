@@ -14,6 +14,11 @@ workflows:
     - activate-ssh-key:
         run_if: ''
     - git-clone: {}
+    - git::https://github.com/kimdv/bitrise-step-swiftlint:
+        inputs:
+        - linting_path: "$BITRISE_SOURCE_DIR/BitBuild"
+        - strict: 'yes'
+        - reporter: emoji
     - script:
         title: continue from repo
         inputs:
