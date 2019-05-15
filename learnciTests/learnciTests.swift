@@ -10,7 +10,7 @@ import XCTest
 @testable import learnci
 
 class learnciTests: XCTestCase {
-    
+
     lazy var vc = ViewController()
 
     override func setUp() {
@@ -20,12 +20,12 @@ class learnciTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-    
+
     func testSum() {
         let c = vc.sum(a: 1, b: 2)
         XCTAssertTrue(c == 3)
     }
-    
+
     func testSumFail() {
         let c = vc.sum(a: 1, b: 2)
         XCTAssertFalse(c == 4)

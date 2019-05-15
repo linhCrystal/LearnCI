@@ -15,11 +15,9 @@ class ViewController: UIViewController {
 		// Do any additional setup after loading the view, typically from a nib.
 		print("Mot Mao")
 	}
-    
+
     func sum(a: Int, b: Int) -> Int {
         return a + b
     }
 
-
 }
-
