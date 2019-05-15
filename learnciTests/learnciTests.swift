@@ -26,9 +26,7 @@ class learnciTests: XCTestCase {
         XCTAssertTrue(c == 3)
     }
 
-
-
-
+    // test
     func testSumFail() {
         let c = vc.sum(a: 1, b: 2)
         XCTAssertFalse(c == 4)
